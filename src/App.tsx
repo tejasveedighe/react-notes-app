@@ -1,17 +1,15 @@
-import classNames from "classnames";
-import styles from "./App.module.css";
+import { Route, Routes } from "react-router-dom";
+import Layout from "./components/layout/Layout";
+import Notes from "./pages/home-page/Notes";
+import Note from "./pages/note/Note";
 
 export default function App() {
 	return (
-		<div className={classNames(styles.parent, "border-8")}>
-			<header className="text-3xl font-bold text-center text-cyan-400">
-				Notes App
-			</header>
-			<div className="notes mt-12 flex gap-2">
-				<div className={styles.note}>Some hsdasdasdasdasdasdasdasdsdlnote</div>
-				<div className={styles.note}>Some note</div>
-				<div className={styles.note}>Some note</div>
-			</div>
-		</div>
+		<Routes>
+			<Route element={<Layout />}>
+				<Route index path="/" element={<Notes />} />
+				<Route path="/note/:id" element={<Note />} />
+			</Route>
+		</Routes>
 	);
 }
