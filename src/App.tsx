@@ -12,7 +12,6 @@ export default function App() {
 	useEffect(() => {
 		onAuthStateChanged(auth, (user) => {
 			if (user) {
-				console.log(user);
 				setHasSignedIn((prev) => !prev);
 			} else {
 				console.log("signed out");
