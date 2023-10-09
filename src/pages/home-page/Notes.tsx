@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import { useCallback } from "react";
+import { BsPlusLg } from "react-icons/bs";
+import { Link, useNavigate } from "react-router-dom";
 
 const posts = [
 	{
@@ -35,12 +37,18 @@ const posts = [
 				"https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 		},
 	},
-	// More posts...
 ];
 
 export default function Notes() {
+	const navigate = useNavigate();
+	const handleAddNote = useCallback(() => {
+		navigate("/addNote");
+	}, [navigate]);
 	return (
 		<div className="bg-white py-12 sm:py-32">
+			<button onClick={handleAddNote} className="text-3xl absolute right-10">
+				<BsPlusLg />
+			</button>
 			<div className="mx-auto max-w-7xl px-6 lg:px-8">
 				<div className="mx-auto max-w-2xl ">
 					<h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">

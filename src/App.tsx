@@ -6,28 +6,32 @@ import { Auth } from "./pages/auth/Auth";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase";
+import AddNote from "./pages/add-note/AddNote";
 
 export default function App() {
 	const [hasSignedIn, setHasSignedIn] = useState<boolean>(false);
 	useEffect(() => {
 		onAuthStateChanged(auth, (user) => {
 			if (user) {
-				setHasSignedIn((prev) => !prev);
+				setHasSignedIn(true);
 			} else {
-				console.log("signed out");
+				setHasSignedIn(false);
 			}
 		});
 	}, []);
 	return (
-		<Routes>
-			{hasSignedIn ? (
-				<Route path="/" element={<Auth />} />
-			) : (
-				<Route element={<Layout />}>
-					<Route index path="/" element={<Notes />} />
-					<Route path="/note/:id" element={<Note />} />
-				</Route>
-			)}
-		</Routes>
+		<>
+			<Routes>
+				{hasSignedIn ? (
+					<Route element={<Layout />}>
+						<Route index path="/" element={<Notes />} />
+						<Route path="/note/:id" element={<Note />} />
+						<Route path="/addNote" element={<AddNote />} />
+					</Route>
+				) : (
+					<Route path="/" element={<Auth />} />
+				)}
+			</Routes>
+		</>
 	);
 }

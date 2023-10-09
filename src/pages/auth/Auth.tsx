@@ -24,13 +24,6 @@ export const Auth = () => {
 			console.error(err);
 		}
 	};
-	const logOut = async () => {
-		try {
-			await signOut(auth);
-		} catch (err) {
-			console.error(err);
-		}
-	};
 
 	const handleEmailChange = useCallback(
 		(e: React.FormEvent<HTMLInputElement>) => {

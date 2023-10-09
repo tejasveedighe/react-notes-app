@@ -1,14 +1,22 @@
-import { onAuthStateChanged } from "firebase/auth";
-import { useEffect, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
-import { auth } from "../../firebase/firebase";
-import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { Fragment, useCallback, useEffect, useState } from "react";
+import { Link, Outlet } from "react-router-dom";
+import { auth } from "../../firebase/firebase";
 
 export default function Layout() {
 	const [profileImg, setProfileImg] = useState<string | null>(null);
+
+	const handleSignOut = useCallback(async () => {
+		try {
+			await signOut(auth);
+		} catch (err) {
+			console.error(err);
+		}
+	}, []);
+
 	useEffect(() => {
 		onAuthStateChanged(auth, (user) => {
 			if (user) {
@@ -96,23 +104,19 @@ export default function Layout() {
 									)}
 								</Menu.Item>
 
-								<form method="POST" action="#">
-									<Menu.Item>
-										{({ active }) => (
-											<button
-												type="submit"
-												className={classNames(
-													active
-														? "bg-gray-100 text-gray-900"
-														: "text-gray-700",
-													"block w-full px-4 py-2 text-left text-sm"
-												)}
-											>
-												Sign out
-											</button>
-										)}
-									</Menu.Item>
-								</form>
+								<Menu.Item>
+									{({ active }) => (
+										<button
+											className={classNames(
+												active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+												"block w-full px-4 py-2 text-left text-sm"
+											)}
+											onClick={handleSignOut}
+										>
+											Sign out
+										</button>
+									)}
+								</Menu.Item>
 							</div>
 						</Menu.Items>
 					</Transition>
