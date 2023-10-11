@@ -26,7 +26,7 @@ export default function App() {
 					<Route element={<Layout />}>
 						<Route index path="/" element={<Notes />} />
 						<Route path="/note/:id" element={<Note />} />
-						<Route path="/addNote" element={<AddNote />} />
+						<Route path="/add-note" element={<AddNote />} />
 					</Route>
 				) : (
 					<Route path="/" element={<Auth />} />

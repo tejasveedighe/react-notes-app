@@ -42,7 +42,7 @@ const posts = [
 export default function Notes() {
 	const navigate = useNavigate();
 	const handleAddNote = useCallback(() => {
-		navigate("/addNote");
+		navigate("/add-note");
 	}, [navigate]);
 	return (
 		<div className="bg-white py-12 sm:py-32">

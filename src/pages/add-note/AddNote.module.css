@@ -1,0 +1,21 @@
+.inputsContainer {
+	min-width: 320px;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	gap: 10px;
+}
+
+.titleInput {
+	font-size: x-large;
+	padding: 10px;
+}
+
+.textInput {
+	font-size: larger;
+	padding: 10px;
+	flex-grow: 4;
+	max-width: 425px;
+    width: auto;
+	min-width: 300px;
+}
