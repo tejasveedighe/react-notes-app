@@ -1,13 +1,16 @@
 import { Menu, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import classNames from "classnames";
-import { onAuthStateChanged, signOut } from "firebase/auth";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { User, signOut } from "firebase/auth";
+import { Fragment, useCallback } from "react";
+import { useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 import { auth } from "../../firebase/firebase";
+import { RootState } from "../../redux/store";
 
 export default function Layout() {
-	const [profileImg, setProfileImg] = useState<string | null>(null);
+	const { user } = useSelector((store: RootState) => store.user);
+	const userProfileImg = (user as User).photoURL;
 
 	const handleSignOut = useCallback(async () => {
 		try {
@@ -17,14 +20,6 @@ export default function Layout() {
 		}
 	}, []);
 
-	useEffect(() => {
-		onAuthStateChanged(auth, (user) => {
-			if (user) {
-				setProfileImg(String(user.photoURL));
-				console.log(user);
-			}
-		});
-	}, []);
 	return (
 		<span className="text-center">
 			<header className="flex items-center justify-between px-4 py-1 border-b border-gray-200 ">
@@ -40,10 +35,10 @@ export default function Layout() {
 				<Menu as="div" className="relative inline-block text-left">
 					<div>
 						<Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-2 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-							{profileImg ? (
+							{userProfileImg ? (
 								<img
 									className="w-8 rounded-full"
-									src={profileImg}
+									src={userProfileImg}
 									alt="profile"
 								/>
 							) : (

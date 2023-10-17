@@ -1,8 +1,8 @@
-import { useCallback, useEffect } from "react";
+import { useCallback } from "react";
 import { BsPlusLg } from "react-icons/bs";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { collection, getDocs } from "firebase/firestore";
-
+import { RootState } from "../../redux/store";
 const posts = [
 	{
 		id: 1,
@@ -41,11 +41,12 @@ const posts = [
 ];
 
 export default function Notes() {
+	const { user } = useSelector((store: RootState) => store.user);
+	console.log(user);
 	const navigate = useNavigate();
 	const handleAddNote = useCallback(() => {
 		navigate("/add-note");
 	}, [navigate]);
-
 
 	return (
 		<div className="bg-white py-12 sm:py-32">

@@ -7,18 +7,23 @@ import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebase";
 import AddNote from "./pages/add-note/AddNote";
+import { useDispatch } from "react-redux";
+import { setUser } from "./redux/userSlice/userSlice";
 
 export default function App() {
 	const [hasSignedIn, setHasSignedIn] = useState<boolean>(false);
+	const dispatch = useDispatch();
 	useEffect(() => {
 		onAuthStateChanged(auth, (user) => {
 			if (user) {
 				setHasSignedIn(true);
+				dispatch(setUser(user));
 			} else {
 				setHasSignedIn(false);
+				dispatch(setUser({}));
 			}
 		});
-	}, []);
+	}, [dispatch]);
 	return (
 		<>
 			<Routes>
