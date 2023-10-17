@@ -21,6 +21,7 @@ export default function Layout() {
 		onAuthStateChanged(auth, (user) => {
 			if (user) {
 				setProfileImg(String(user.photoURL));
+				console.log(user);
 			}
 		});
 	}, []);

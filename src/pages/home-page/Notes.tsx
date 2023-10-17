@@ -1,6 +1,7 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { BsPlusLg } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
+import { collection, getDocs } from "firebase/firestore";
 
 const posts = [
 	{
@@ -44,6 +45,8 @@ export default function Notes() {
 	const handleAddNote = useCallback(() => {
 		navigate("/add-note");
 	}, [navigate]);
+
+
 	return (
 		<div className="bg-white py-12 sm:py-32">
 			<button onClick={handleAddNote} className="text-3xl absolute right-10">
