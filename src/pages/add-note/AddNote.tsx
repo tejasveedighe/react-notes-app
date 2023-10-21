@@ -1,5 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc } from "firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { TiTick } from "react-icons/ti";
@@ -10,21 +10,16 @@ export default function AddNote() {
 	const [uid, setUid] = useState<string>("");
 	const [title, setTitle] = useState<string>("");
 	const [details, setDetails] = useState<string>("");
+
 	const handleSubmit = useCallback(async () => {
-		console.log("clicked");
-		if (title) {
-			try {
-				const docRef = await addDoc(collection(db, "notes"), {
-					title,
-					details,
-					uid,
-				});
-				console.log(docRef);
-			} catch (error) {
-				console.log(error);
-			}
-		} else console.log("no title");
+		const docRef = await addDoc(collection(db, "notes"), {
+			title: title,
+			note: details,
+			uid: uid,
+		});
+		console.log(docRef);
 	}, [details, title, uid]);
+
 	useEffect(() => {
 		onAuthStateChanged(auth, (user) => {
 			if (user) {
