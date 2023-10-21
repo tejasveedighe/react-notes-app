@@ -3,20 +3,10 @@ import { useCallback, useEffect, useState } from "react";
 import { BsPlusLg } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { db } from "../../firebase/firebase";
-
-type Post = {
-	id: string;
-	title: string;
-	note: string;
-	date: string;
-	category: {
-		title: string;
-	};
-	authorid: string;
-}[];
+import { NotesType } from "../../types/Notes";
 
 export default function Notes() {
-	const [notes, setNotes] = useState<Post>([]);
+	const [notes, setNotes] = useState<NotesType>([]);
 	const navigate = useNavigate();
 
 	const handleAddNote = useCallback(() => {
@@ -43,7 +33,7 @@ export default function Notes() {
 			setNotes(notes);
 		});
 		return () => unsubscribe();
-	}, [noteRef]);
+	}, []);
 
 	return (
 		<div className="bg-white py-12 sm:py-32">
