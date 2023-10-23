@@ -1,13 +1,15 @@
-import { Route, Routes } from "react-router-dom";
-import Layout from "./components/layout/Layout";
-import Notes from "./pages/home-page/Notes";
-import Note from "./pages/note/Note";
-import { Auth } from "./pages/auth/Auth";
-import { useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
+import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import Layout from "./components/layout/Layout";
 import { auth } from "./firebase/firebase";
 import AddNote from "./pages/add-note/AddNote";
-import { useDispatch } from "react-redux";
+import { Auth } from "./pages/auth/Auth";
+import Notes from "./pages/home-page/Notes";
+import Note from "./pages/note/Note";
 import { setUser } from "./redux/userSlice/userSlice";
 
 export default function App() {
@@ -37,6 +39,7 @@ export default function App() {
 					<Route path="/" element={<Auth />} />
 				)}
 			</Routes>
+			<ToastContainer />
 		</>
 	);
 }

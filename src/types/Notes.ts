@@ -1,8 +1,8 @@
 export type NoteType = {
-	id: string;
+	id?: string;
 	title: string;
 	note: string;
-	date: string;
+	date: Date;
 	category: {
 		title: string;
 	};

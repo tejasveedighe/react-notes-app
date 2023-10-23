@@ -1,29 +1,45 @@
 import { onAuthStateChanged } from "firebase/auth";
-import { addDoc, collection, doc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import { useCallback, useEffect, useState } from "react";
 import { IconContext } from "react-icons";
 import { TiTick } from "react-icons/ti";
+import { useNavigate } from "react-router-dom";
 import { auth, db } from "../../firebase/firebase";
+import { notify } from "../../helper";
 import styles from "./AddNote.module.css";
+import { NoteType } from "../../types/Notes";
 
 export default function AddNote() {
 	const [uid, setUid] = useState<string>("");
 	const [title, setTitle] = useState<string>("");
 	const [details, setDetails] = useState<string>("");
-
+	const [category, setCategory] = useState<string>("");
+	const navigate = useNavigate();
 	const handleSubmit = useCallback(async () => {
-		const docRef = await addDoc(collection(db, "notes"), {
+		const newNote: NoteType = {
 			title: title,
 			note: details,
-			uid: uid,
-		});
-		console.log(docRef);
-	}, [details, title, uid]);
+			authorid: uid,
+			category: {
+				title: category,
+			},
+			date: new Date(),
+		};
+		const docRef = await addDoc(collection(db, "notes"), newNote);
+		if (docRef) {
+			notify("success", title);
+			navigate("/");
+		} else {
+			notify("error", title);
+		}
+	}, [category, details, navigate, title, uid]);
 
 	useEffect(() => {
 		onAuthStateChanged(auth, (user) => {
 			if (user) {
 				setUid(user.uid);
+			} else {
+				notify("error", "please login");
 			}
 		});
 	}, []);
@@ -37,6 +53,12 @@ export default function AddNote() {
 					placeholder="Title.."
 					onChange={(e) => setTitle(e.target.value)}
 					value={title}
+				/>
+				<input
+					className={styles.categoryInput}
+					placeholder="Category of Note"
+					onChange={(e) => setCategory(e.target.value)}
+					value={category}
 				/>
 				<textarea
 					className={styles.textInput}
