@@ -94,7 +94,7 @@ export default function Note() {
 			</div>
 			<button
 				onClick={handleSubmit}
-				className="absolute bottom-3 right-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
+				className="fixed bottom-3 right-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
 			>
 				<IconContext.Provider
 					value={{
