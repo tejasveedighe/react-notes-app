@@ -1,5 +1,6 @@
+import { Menu, Transition } from "@headlessui/react";
 import { collection, onSnapshot } from "firebase/firestore";
-import { useCallback, useEffect, useState } from "react";
+import React, { Fragment, useCallback, useEffect, useState } from "react";
 import { BsPlusLg } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
 import { db } from "../../firebase/firebase";
@@ -50,10 +51,10 @@ export default function Notes() {
 					{notes.map((post, index) => (
 						<article
 							key={index}
-							className="flex max-w-xl flex-col items-start justify-between"
+							className="flex max-w-xs flex-col items-start justify-between border border-yellow-500 p-2"
 						>
-							<div className="flex items-center gap-x-4 text-xs">
-								<a className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
+							<div className="relative w-full flex items-center justify-between text-xs">
+								<a className="relative rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">
 									{post.category.title}
 								</a>
 							</div>
@@ -64,7 +65,7 @@ export default function Notes() {
 										{post.title}
 									</Link>
 								</h3>
-								<p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">
+								<p className="mt-4 line-clamp-3 text-sm leading-6 text-gray-600 text-ellipsis w-100 break-words">
 									{post.note}
 								</p>
 							</div>
