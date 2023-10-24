@@ -8,6 +8,8 @@ import { auth, db } from "../../firebase/firebase";
 import { notify } from "../../helper";
 import { NoteType } from "../../types/Notes";
 import styles from "./Note.module.css";
+import SubmitButton from "../../components/SubmitButton/SubmitButton";
+import Input from "../../components/Input/Input";
 
 export default function Note() {
 	const { id } = useParams();
@@ -70,16 +72,14 @@ export default function Note() {
 	return (
 		<div className="min-h-full mt-5 relative">
 			<div className={styles.inputsContainer}>
-				<input
+				<Input
 					required
 					autoFocus
-					className={styles.titleInput}
 					placeholder="Title.."
 					onChange={(e) => setTitle(e.target.value)}
 					value={title}
 				/>
-				<input
-					className={styles.categoryInput}
+				<Input
 					placeholder="Category of Note"
 					onChange={(e) => setCategory(e.target.value)}
 					value={category}
@@ -92,18 +92,7 @@ export default function Note() {
 					rows={15}
 				/>
 			</div>
-			<button
-				onClick={handleSubmit}
-				className="fixed bottom-3 right-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
-			>
-				<IconContext.Provider
-					value={{
-						size: "1.5em",
-					}}
-				>
-					<TiTick />
-				</IconContext.Provider>
-			</button>
+			<SubmitButton handleSubmit={handleSubmit} />
 		</div>
 	);
 }
